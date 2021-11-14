@@ -1,0 +1,33 @@
+{
+  "name": "erc721-snapshot",
+  "version": "1.0.4",
+  "description": "ERC721 Token Snapshot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "bin": {
+    "erc721-snapshot": "index.js"
+  },
+  "keywords": [
+    "ethereum",
+    "erc721",
+    "token",
+    "snapshot"
+  ],
+  "author": "0xSlot",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/0xSlot/erc721-snapshot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xSlot/erc721-snapshot"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^10.0.0",
+    "inquirer": "^8.1.2",
+    "linq": "^3.2.4",
+    "web3": "^1.5.2"
+  }
+}

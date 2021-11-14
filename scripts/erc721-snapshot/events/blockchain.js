@@ -56,7 +56,6 @@ const tryGetEvents = async (start, end, symbol) => {
 module.exports.get = async () => {
   const name = await Contract.methods.name().call();
   const symbol = await Contract.methods.symbol().call();
-  const decimals = await Contract.methods.decimals().call();
   const blockHeight = await web3.eth.getBlockNumber();
   var fromBlock = parseInt(Config.fromBlock) || 0;
   const blocksPerBatch = parseInt(Config.blocksPerBatch) || 0;
@@ -100,8 +99,7 @@ module.exports.get = async () => {
   const data = {
     name,
     symbol,
-    decimals,
-    events: events
+    events
   };
 
   return data;

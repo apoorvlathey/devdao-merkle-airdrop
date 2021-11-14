@@ -19,7 +19,7 @@ const findTypeFromCache = (cache, wallet) => {
 };
 
 module.exports.addType = async balances => {
-  if (Config.checkIfContract.toLowerCase() !== "yes") {
+  if (!Config.checkIfContract) {
     return balances;
   }
 
@@ -29,8 +29,6 @@ module.exports.addType = async balances => {
   for await (const balance of balances) {
     counter++;
     let type = findTypeFromCache(cache, balance.wallet);
-    console.log("%d of %d. Determining if %s is a contract.", counter, balances.length, balance.wallet);
-
     if (!type) {
       type = "wallet";
 

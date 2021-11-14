@@ -1,5 +1,6 @@
 "use strict";
 
+require("dotenv").config();
 const fs = require("fs");
 const inquirer = require("inquirer");
 
@@ -25,7 +26,10 @@ module.exports.checkConfig = async () => {
 module.exports.getConfig = () => {
   try {
     const contents = fs.readFileSync(Parameters.configFileName);
-    return JSON.parse(contents);
+    const contents_json = JSON.parse(contents);
+    contents_json.provider = process.env.MAINNET_PROVIDER;
+
+    return contents_json;
   } catch (e) {
     console.error("Configuration file was not found.");
   }

@@ -14,7 +14,8 @@ const start = async () => {
   console.log("Calculating balances of %s (%s)", result.name, result.symbol);
   const balances = await Balances.createBalances(result);
 
-  console.log("Exporting balances");
+  console.log(`Found ${balances.length} holders.`);
+  console.log('Exporting...');
   await Export.exportBalances(result.symbol, balances, format);
 };
 

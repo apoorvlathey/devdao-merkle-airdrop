@@ -16,7 +16,7 @@ const getMinimal = pastEvents => {
       transactionHash: tx.transactionHash,
       from: tx.returnValues["0"],
       to: tx.returnValues["1"],
-      value: tx.returnValues["2"]._hex
+      tokenId: tx.returnValues["2"]
     };
   });
 };

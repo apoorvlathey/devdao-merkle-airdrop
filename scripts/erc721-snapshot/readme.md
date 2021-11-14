@@ -1,6 +1,14 @@
-# Token Snapshot: Create ERC20 Token Snapshot
+# Token Snapshot: Create ERC721 Token Snapshot
 
-This command-line utility creates a snapshot of any ERC20 token in JSON or CSV format. Use your own fully synced Ethereum node or any _Ethereum node as a service_ like Infura.
+> Forked from [erc721-snapshot](https://github.com/0xSlot/erc721-snapshot)
+
+## Setup
+
+Refer to `.env.sample` and create `.env` with the required values
+
+<hr />
+
+This command-line utility creates a snapshot of any ERC721 token in JSON or CSV format. Use your own fully synced Ethereum node or any _Ethereum node as a service_ like Infura.
 
 - Works without a local Ethereum node.
 - Automatically resumes the next time upon failure.
@@ -9,7 +17,7 @@ This command-line utility creates a snapshot of any ERC20 token in JSON or CSV f
 ## Getting Started
 
 ```
-npm install erc20-snapshot -g
+npm install erc721-snapshot -g
 ```
 
 ### CLI Arguments
@@ -27,10 +35,12 @@ cd path/to/a/directory
 Run the program:
 
 ```
-erc20-snapshot
+erc721-snapshot
 ```
 
 ## Configuration File / Prompt Parameters
+
+To avoid getting prompted for each configuration parameters, each time `erc721-snapshot` is ran, have a `./snapshot.config.json` file at the same location as `erc721-snapshot` is executed.
 
 ```json
 {
@@ -41,7 +51,7 @@ erc20-snapshot
   "format": "json",
   "blocksPerBatch": 2500,
   "delay": 0,
-  "checkIfContract": "yes"
+  "checkIfContract": true
 }
 ```
 
@@ -51,7 +61,7 @@ Enter your fully synced Ethereum node. Could be a local node or remote services 
 
 ### contractAddress
 
-Address of your ERC20 token.
+Address of your ERC721 contract.
 
 ### fromBlock
 
@@ -74,11 +84,3 @@ The delay (in ms) between each request in the loop. Tweak this if you are experi
 ### checkIfContract
 
 Checks each address to determine whether it is a smart contract or an Ethereum wallet.
-
-## You May Also Like
-
-- [Vyper ERC20 Contracts](https://github.com/binodnp/vyper-erc20)
-- [Vyper Crowdsale Contracts](https://github.com/binodnp/vyper-crowdsale)
-- [Solidoc: Solidity Documentation Generator](https://github.com/CYBRToken/solidoc)
-- [SolFlattener: Solidity Flattener](https://github.com/CYBRToken/sol-flattener)
-- [Vesting Schedule](https://github.com/binodnp/vesting-schedule)
