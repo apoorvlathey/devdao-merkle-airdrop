@@ -23,7 +23,7 @@ function App() {
   const [merkleContract, setMerkleContract] = useState<Contract>();
 
   const merkleABI = require("./abi/MerkleAirdropDistributor.json");
-  const merkleAddress = "0x7CB93bC5396F23629D9Da2cCe686e82B07E2170d";
+  const merkleAddress = "0x97DA24dC8F75C9b8503BCa9814A7C7B82EA02377";
 
   const [signerAirdrops, setSignerAirdrops] = useState<TokenAirdrop[]>([]);
 
@@ -83,7 +83,9 @@ function App() {
         borderBottomColor="gray.500"
       >
         <Spacer flex="1" />
-        <Heading maxW={["302px", "4xl", "4xl", "4xl"]}>Claim Airdrops</Heading>
+        <Heading maxW={["302px", "4xl", "4xl", "4xl"]}>
+          Claim DEV Airdrop
+        </Heading>
         <Spacer flex="1" />
       </Flex>
       <Center>

@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import Portis from "@portis/web3";
-import Fortmatic from "fortmatic";
-import Torus from "@toruslabs/torus-embed";
 import { ethers } from "ethers";
 import {
   Button,
@@ -26,46 +23,14 @@ const providerOptions = {
       infuraId: process.env.REACT_APP_INFURA_ID, // required
     },
   },
-  portis: {
-    package: Portis, // required
-    options: {
-      id: process.env.REACT_APP_PORTIS_ID, // required
-    },
-  },
-  fortmatic: {
-    package: Fortmatic, // required
-    options: {
-      key: process.env.REACT_APP_FORTMATIC_KEY, // required
-    },
-  },
-  torus: {
-    package: Torus, // required
-  },
 };
 const web3Modal = new Web3Modal({
   network: "rinkeby", // optional
-  cacheProvider: false, // optional
+  cacheProvider: true, // optional
   providerOptions, // required
 });
 
 export const targetNetwork = { name: "Rinkeby Testnet", chainId: 4 };
-
-const connectWallet = async (
-  setLocalProvider: setProvider,
-  openModal: any,
-  setProviderIsFinal: any
-) => {
-  const provider = new ethers.providers.Web3Provider(await web3Modal.connect());
-
-  const chainId = await (await provider.getNetwork()).chainId;
-  if (chainId !== targetNetwork.chainId) {
-    openModal();
-    setLocalProvider(provider);
-  } else {
-    setLocalProvider(provider);
-    setProviderIsFinal(true);
-  }
-};
 
 const ConnectWallet = ({
   setProvider,
@@ -77,6 +42,22 @@ const ConnectWallet = ({
   const [localProvider, setLocalProvider] = useState<any>();
   const [providerIsFinal, setProviderIsFinal] = useState(false);
 
+  const connectWallet = async () => {
+    const provider = new ethers.providers.Web3Provider(
+      await web3Modal.connect()
+    );
+
+    const chainId = await (await provider.getNetwork()).chainId;
+    if (chainId !== targetNetwork.chainId) {
+      onOpen();
+      setLocalProvider(provider);
+    } else {
+      web3Modal.clearCachedProvider();
+      setLocalProvider(provider);
+      setProviderIsFinal(true);
+    }
+  };
+
   const switchNetwork = () => {
     const params = {
       chainId: ethers.utils.hexValue(targetNetwork.chainId),
@@ -86,10 +67,12 @@ const ConnectWallet = ({
       .send("wallet_switchEthereumChain", [params])
       .then(async () => {
         // ethers providers are immutable so need to instantiate a new one
+        // as cacheProvider=true, so it won't pop up web3modal again
         setLocalProvider(
           new ethers.providers.Web3Provider(await web3Modal.connect())
         );
         setProviderIsFinal(true);
+        web3Modal.clearCachedProvider();
       })
       .catch((error: any) => console.log(error));
   };
@@ -102,12 +85,7 @@ const ConnectWallet = ({
 
   return (
     <>
-      <Button
-        onClick={() =>
-          connectWallet(setLocalProvider, onOpen, setProviderIsFinal)
-        }
-        {...props}
-      >
+      <Button onClick={() => connectWallet()} {...props}>
         Connect Wallet
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
