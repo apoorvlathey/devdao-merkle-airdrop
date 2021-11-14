@@ -5,23 +5,17 @@ import { parseEther, formatEther } from "@ethersproject/units";
 import BN from "bignumber.js";
 import { saveToFile } from "./utils";
 
-const _snapshot = require("./snapshots/1.json");
+const _snapshot = require("./snapshots/DEVS_Snapshot_13612670.json");
 const snapshot: tokenBalanceSnapshot = _snapshot;
 
 type tokenBalanceSnapshot = {
   wallet: string;
-  balance: string;
+  tokenIds: string[];
   type?: string;
 }[];
 
-const getTotalSupply = () => {
-  let totalSupply = new BN(0);
-
-  for (var i = 0; i < snapshot.length; i++) {
-    totalSupply = totalSupply.plus(new BN(snapshot[i].balance));
-  }
-
-  return totalSupply;
+const getTotalUniqueWallets = () => {
+  return new BN(snapshot.length);
 };
 
 const getNodeLeaf = (
@@ -50,33 +44,26 @@ interface UserData {
 }
 
 const main = () => {
-  const airdropIndex = 3;
-  const tokenAddress = "0x7eB344a90a09999515097adc049a629d769CD0b8";
-  const tokenSymbol = "MOCK";
-  const tokenImg = "/images/tokens/matic.png";
-  const totalTokensToAirdrop = new BN(parseEther("100000").toString());
+  const airdropIndex = 0;
+  const tokenAddress = "0x2d651b707C9c535cf7FB88c8C4E13D1fcE55025f";
+  const tokenSymbol = "DEV";
+  const tokenImg = "/images/tokens/dev.png";
+  const totalTokensToAirdrop = new BN(parseEther("1000000").toString());
 
-  const totalSupply = getTotalSupply();
+  const totalUniqueWallets = getTotalUniqueWallets();
+  const airdropAmount = totalTokensToAirdrop.div(totalUniqueWallets).toFixed(0);
 
   let userData: UserData = {};
 
   const merkleTree = new MerkleTree(
     snapshot.map((x) => {
       const user = x.wallet.toLowerCase();
-      const airdropAmount = new BN(x.balance)
-        .div(totalSupply)
-        .multipliedBy(totalTokensToAirdrop);
 
-      const leaf = getNodeLeaf(
-        airdropIndex,
-        tokenAddress,
-        user,
-        airdropAmount.toFixed()
-      );
+      const leaf = getNodeLeaf(airdropIndex, tokenAddress, user, airdropAmount);
 
       userData[user] = {
-        airdropAmountInWei: airdropAmount.toFixed(),
-        airdropAmount: formatEther(airdropAmount.toFixed()).toString(),
+        airdropAmountInWei: airdropAmount,
+        airdropAmount: formatEther(airdropAmount).toString(),
         proof: [""], // empty for now, as would be calculated after merkle tree is generated
       };
 
