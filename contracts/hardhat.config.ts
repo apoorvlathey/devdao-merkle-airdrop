@@ -27,8 +27,8 @@ const config: HardhatUserConfig = {
     local: {
       url: "http://127.0.0.1:8545",
     },
-    polygon: {
-      url: process.env.POLYGON_NODE_URL!,
+    rinkeby: {
+      url: process.env.RINKEBY_NODE_URL!,
       accounts: [process.env.DEPLOYER_PRIVATE_KEY!],
     },
   },

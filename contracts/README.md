@@ -30,10 +30,10 @@ Quickly setup your next project! This boilerplate includes:
    `yarn deploy:default`  
    Note: If you want to force deploy again, add `--reset` flag
 
-4. Deploy to Polygon Mainnet
+4. Deploy to Rinkeby
 
-   `yarn deploy:polygon`
+   `yarn deploy:rinkeby`
 
-5. Verify deployed contracts on Etherscan (Polygonscan)
+5. Verify deployed contracts on Etherscan
 
-   `yarn etherscan-verify:polygon`
+   `yarn verify:rinkeby`

@@ -1,5 +1,5 @@
 {
-  "name": "hardhat-boilerplate",
+  "name": "contracts",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -8,11 +8,12 @@
     "test": "hardhat test",
     "test:logs": "hardhat test --logs",
     "deploy:default": "hardhat deploy",
-    "deploy:polygon": "hardhat deploy --network polygon",
-    "etherscan-verify:polygon": "hardhat --network polygon etherscan-verify"
+    "deploy:rinkeby": "hardhat deploy --network rinkeby",
+    "verify:rinkeby": "hardhat --network rinkeby etherscan-verify"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
+    "@types/dotenv": "^8.2.0",
     "keccak256": "^1.0.3",
     "merkletreejs": "^0.2.24"
   },
